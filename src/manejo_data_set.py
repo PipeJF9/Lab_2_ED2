@@ -2,7 +2,8 @@
 import pandas as pd
 import os
 import pprint
-ruta_csv = '../data_set/flights_final.csv'
+import math
+ruta_csv = './data_set/flights_final.csv'
 
 #Ruta Absoluta del Dataset
 ruta_absoluta = os.path.abspath(ruta_csv)
@@ -32,7 +33,28 @@ for i in range(num_filas):
         codido_id += 1
 
 
+def distancia_haversine(lat1, lon1, lat2, lon2):
+    # Radio de la Tierra en kilómetros
+    radio_tierra = 6371.0
 
+    # Convierte las coordenadas de grados a radianes
+    lat1_rad = math.radians(lat1)
+    lon1_rad = math.radians(lon1)
+    lat2_rad = math.radians(lat2)
+    lon2_rad = math.radians(lon2)
+
+    # Diferencia entre las longitudes y latitudes
+    dlon = lon2_rad - lon1_rad
+    dlat = lat2_rad - lat1_rad
+
+    # Fórmula haversine
+    a = math.sin(dlat / 2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    # Calcula la distancia
+    distancia = radio_tierra * c
+
+    return distancia
 
 
 
