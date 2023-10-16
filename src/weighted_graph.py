@@ -1,5 +1,5 @@
 import math
-
+import numpy as np
 from typing import Any, List, Optional, Tuple
 from queue import Queue
 
@@ -39,6 +39,7 @@ class WeightedGraph:
         self.n = n
         self.nodes: List["Node"] = []
         self.C = [[0 for i in range(n)] for j in range(n)]
+        self.aristas= None
 
     #añadir los nodos
     def add_node(self, node: "Node") -> None:
@@ -72,13 +73,54 @@ class WeightedGraph:
             if node.Source_Airport_Code == source_airport_code:
                 return node
         return None
+    def __get_minimum(self, l):
+        minor = ["", np.inf]
+        index = -1
+        for i in range(len(l)):
+            if l[i][1] < minor[1]:
+                minor = l[i].copy()
+                index = i
 
+        return (minor, index)
 
+    def __print_iteration(self, distance, father):
+        for key in distance:
+         print(key + ": " + str(distance[key]) + " - " + (father[key] if father[key] != None else "-"), end=" | ")
 
+        print()
 
+  #source: nodo fuente
+    def Dijkstra(self, source,conection):
+        distance = dict()
+        father = dict()
+        visited = dict()
 
+        for u in self.nodes:
+            distance[u.Source_Airport_Code] = np.inf
+            father[u.Source_Airport_Code] = None
+            visited[u.Source_Airport_Code] = False
 
+        distance[source] = 0
+        queue = [[source, distance[source]]]
+        while len(queue) != 0:
+            t = self.__get_minimum(queue)
+            u = t[0]
+            u_name = u[0]
+            queue.pop(t[1])
+            visited[u_name] = True
 
+            for v in conection:
+                v_name = None
+                if v[0] == u_name:
+                    v_name, (v_weight) = v[1], float(v[2])
+                elif v[1] == u_name:
+                    v_name, v_weight = v[0], float(v[2])
+                if (v_name != None):
+                    if (not visited[v_name]):
+                        if (distance[v_name] > distance[u_name] + v_weight):
+                            distance[v_name] = distance[u_name] + v_weight
+                            father[v_name] = u_name
+                            queue.append([v_name, distance[v_name]])
 
-
-
+        self.__print_iteration(distance, father)
+            
