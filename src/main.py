@@ -1,6 +1,6 @@
 from weighted_graph import WeightedGraph, Node
 from manejo_data_set import df, diccionario
-
+from Map import add_markers
 
 #instancia de la clase WeightedGraph
 graph = WeightedGraph(len(diccionario))
@@ -32,4 +32,5 @@ for index, row in df.iterrows():
         graph.add_edge(source_node, destination_node)
 print(len(graph.nodes))
 
-
+Map= add_markers(graph)
+Map.show_in_browser()
