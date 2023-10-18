@@ -2,7 +2,7 @@ import math
 import numpy as np
 from typing import Any, List, Optional, Tuple
 from queue import Queue
-
+from Map import aristas,show_in_browser
 
 class Node:
 
@@ -85,12 +85,50 @@ class WeightedGraph:
 
         return (minor, index)
 
-    def __print_iteration(self, distance, father):
+    #hallar las distancias minimas
+    def distancias_minimas(self,distance,father):
+        minimas=dict()
         for key in distance:
-         print(key + ": " + str(distance[key]) + " - " + (father[key] if father[key] != None else "-"), end=" | ")
+            total=0
+            clave=key
+            ws=0
+            while ws==0:
+                total=total+float(distance[clave])
+                if father[clave]!=None:
+                    clave=father[clave]
+                else:
+                    ws=1
+            minimas[key]=total
+        #self.tenmax(minimas)
+        self.notinf(minimas,father,distance)
+        return minimas
+    #hallar las 10 distancias minimas
+    def tenmax(self,minimas,father,distance):
+        max_ordenadas = sorted(minimas.items(), key=lambda x: x[1], reverse=True)
+        ten=max_ordenadas[:10]
+        if ten[0][1]==0:
+            return
+    #hallar las aristas de las 10 distancias minimas (no sirve)   
+        for key in ten:
+            for clave in distance:
+                if clave==key:
+                    ws=0
+                    l=clave
+                    while ws==0:
+                        if father[l]!=None:
+                            aristas(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Latitude,l,father[l])
+                            l=father[l]
+                        else:
+                            ws=1
+        show_in_browser()
 
-        print()
-
+    #hallar las distancias infinitas y volverlas 0
+    def notinf(self,distance,father,distance1):
+        for key in distance:
+            if distance[key]==np.inf:
+                distance[key]=0
+        self.tenmax(distance,father,distance1)
+        return distance
   #source: nodo fuente
     def Dijkstra(self, source,conection):
         distance = dict()
@@ -123,6 +161,11 @@ class WeightedGraph:
                             distance[v_name] = distance[u_name] + v_weight
                             father[v_name] = u_name
                             queue.append([v_name, distance[v_name]])
+        print(len(distance))
+        print(len(father))
 
-        self.__print_iteration(distance, father)
-            
+        
+        return self.distancias_minimas(distance,father)
+        #self.__print_iteration(distance, father)
+    
+    
