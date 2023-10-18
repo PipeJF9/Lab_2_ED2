@@ -106,20 +106,19 @@ class WeightedGraph:
     def tenmax(self,minimas,father,distance):
         max_ordenadas = sorted(minimas.items(), key=lambda x: x[1], reverse=True)
         ten=max_ordenadas[:10]
+        print(ten)
         if ten[0][1]==0:
             return
     #hallar las aristas de las 10 distancias minimas (no sirve)   
         for key in ten:
-            for clave in distance:
-                if clave==key:
-                    ws=0
-                    l=clave
-                    while ws==0:
-                        if father[l]!=None:
-                            aristas(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Latitude,l,father[l])
-                            l=father[l]
-                        else:
-                            ws=1
+                    l=key[0]
+                    while father[l]!=None:
+                        #crear una arista dada por nodo con el nombre del padre l y el nombre del nodo l
+                        #aristas(self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Latitude,father[l],l)
+
+                        #aristas(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Latitude,l,father[l])
+                        l = father[l]
+
         show_in_browser()
 
     #hallar las distancias infinitas y volverlas 0
@@ -130,7 +129,7 @@ class WeightedGraph:
         self.tenmax(distance,father,distance1)
         return distance
   #source: nodo fuente
-    def Dijkstra(self, source,conection):
+    def Dijkstra(self, source):
         distance = dict()
         father = dict()
         visited = dict()
@@ -149,7 +148,7 @@ class WeightedGraph:
             queue.pop(t[1])
             visited[u_name] = True
 
-            for v in conection:
+            for v in self.aristas:
                 v_name = None
                 if v[0] == u_name:
                     v_name, (v_weight) = v[1], float(v[2])

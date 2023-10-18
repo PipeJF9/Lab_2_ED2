@@ -17,12 +17,13 @@ def __add_marker(lat, lon, name, code, city, country):
 
 def aristas(lat1, lon1, lat2, lon2, code1, code2):
     folium.PolyLine(
-    smooth_factor=50,
+    #smooth_factor=50,
     locations=[[lat1, lon1], [lat2, lon2]],
     color="grey",
     tooltip=code1 + " - " + code2,
-    weight=5,
+    weight=2,
     ).add_to(m)
+
 
 def show_in_browser():
     m.show_in_browser()

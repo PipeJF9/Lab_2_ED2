@@ -41,24 +41,9 @@ add_markers(graph)
 
 
 
-valores_unicos = set()
-valores=[]
-for fila in Vuelos:
-    # Ordena la fila para asegurarte de que las columnas no importen
-    fila_ordenada = sorted(fila,reverse=True)
-
-    # Convierte la fila ordenada en una tupla para que sea hasheable y pueda usarse en el conjunto
-    fila_tupla = tuple(fila_ordenada)
-
-    # Si la fila ordenada no está en el conjunto, es un valor único
-    if fila_tupla not in valores_unicos:
-        valores.append(fila_ordenada)
-        valores_unicos.add(fila_tupla)
-
-
 
 
 location(graph.search_node("HUS").Source_Airport_Latitude,graph.search_node("HUS").Source_Airport_Longitude)
 
-graph.Dijkstra("HUS",valores)
+graph.Dijkstra("HUS")
 
