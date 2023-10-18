@@ -34,8 +34,8 @@ for i in range(num_filas):
 
 
 def distancia_haversine(lat1, lon1, lat2, lon2):
-    # Radio de la Tierra en kilómetros
-    radio_tierra = 6371.0
+    # Radio de la Tierra
+    r = 6371.0
 
     # Convierte las coordenadas de grados a radianes
     lat1_rad = math.radians(lat1)
@@ -52,7 +52,7 @@ def distancia_haversine(lat1, lon1, lat2, lon2):
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
     # Calcula la distancia
-    distancia = radio_tierra * c
+    distancia = r * c
 
     return distancia
 

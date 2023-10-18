@@ -1,6 +1,6 @@
 from weighted_graph import WeightedGraph, Node
 from manejo_data_set import df, diccionario,distancia_haversine
-from Map import add_markers
+from Map import add_markers, location
 
 #instancia de la clase WeightedGraph
 graph = WeightedGraph(len(diccionario))
@@ -35,8 +35,8 @@ for index, row in df.iterrows():
         graph.add_edge(source_node, destination_node)
 print(len(graph.nodes))
 print(len(Vuelos))
-#Map= add_markers(graph)
-#Map.show_in_browser()
+add_markers(graph)
+
 
 valores_unicos = set()
 valores=[]
@@ -52,7 +52,7 @@ for fila in Vuelos:
         valores.append(fila_ordenada)
         valores_unicos.add(fila_tupla)
 
-print(len(valores_unicos))
-print(len(valores))
+
+location(graph.search_node("HUS").Source_Airport_Latitude,graph.search_node("HUS").Source_Airport_Longitude)
 
 graph.Dijkstra("HUS",valores)
