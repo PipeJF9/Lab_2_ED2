@@ -86,28 +86,10 @@ class WeightedGraph:
         return (minor, index)
 
     #hallar las distancias minimas
-    def distancias_minimas(self,distance,father):
-        minimas=dict()
-        for key in distance:
-            total=0
-            clave=key
-            ws=0
-            while ws==0:
-                total=total+float(distance[clave])
-                if father[clave]!=None:
-                    clave=father[clave]
-                else:
-                    ws=1
-            minimas[key]=total
-        print(minimas['BKI'])
-        print(distance['BKI'])
-        #self.tenmax(minimas)
+    
 
-        self.notinf(minimas,father,distance)
-
-        return minimas
     #hallar las 10 distancias minimas
-    def tenmax(self,minimas,father,distance):
+    def tenmax(self,minimas,father):
         max_ordenadas = sorted(minimas.items(), key=lambda x: x[1], reverse=True)
         ten=max_ordenadas[:10]
         print(ten)
@@ -118,23 +100,19 @@ class WeightedGraph:
             l=key[0]
             while father[l]!=None:
                             #crear una arista dada por nodo con el nombre del padre l y el nombre del nodo l
-                            #aristas(self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Latitude,father[l],l)
-             #               if father[l]=="HUS":
-                               # print(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,l,father[l])
                                 aristas(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,l,father[l])
-               #             print(l,father[l])
                                 l = father[l]
         show_in_browser()
 
     #hallar las distancias infinitas y volverlas 0
-    def notinf(self,distance,father,distance1):
+    def notinf(self,distance,father):
         for key in distance:
             if distance[key]==np.inf:
                 distance[key]=0
-        self.tenmax(distance,father,distance1)
+        self.tenmax(distance,father)
         return distance
   #source: nodo fuente
-    def Dijkstra(self, source):
+    def Dijkstra(self, source,source2=None):
         distance = dict()
         father = dict()
         visited = dict()
@@ -165,11 +143,15 @@ class WeightedGraph:
                             distance[v_name] = distance[u_name] + v_weight
                             father[v_name] = u_name
                             queue.append([v_name, distance[v_name]])
-        print(len(distance))
-        print(len(father))
+        if source2!=None:
+            while father[source2]!=None:
+                 #crear una arista dada por nodo con el nombre del padre l y el nombre del nodo l
+                aristas(self.search_node(source2).Source_Airport_Latitude,self.search_node(source2).Source_Airport_Longitude,self.search_node(father[source2]).Source_Airport_Latitude,self.search_node(father[source2]).Source_Airport_Longitude,source2,father[source2])
+                source2 = father[source2]
+            show_in_browser()
+            return
+        return self.notinf(distance,father)
 
-        
-        return self.distancias_minimas(distance,father)
         #self.__print_iteration(distance, father)
     
     
