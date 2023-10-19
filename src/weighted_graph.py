@@ -99,26 +99,31 @@ class WeightedGraph:
                 else:
                     ws=1
             minimas[key]=total
+        print(minimas['BKI'])
+        print(distance['BKI'])
         #self.tenmax(minimas)
+
         self.notinf(minimas,father,distance)
+
         return minimas
     #hallar las 10 distancias minimas
     def tenmax(self,minimas,father,distance):
         max_ordenadas = sorted(minimas.items(), key=lambda x: x[1], reverse=True)
         ten=max_ordenadas[:10]
+        print(ten)
         if ten[0][1]==0:
             return
     #hallar las aristas de las 10 distancias minimas (no sirve)   
-        #for key in ten:
-        l=ten[0][0]
-        while father[l]!=None:
-                        #crear una arista dada por nodo con el nombre del padre l y el nombre del nodo l
-                        #aristas(self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Latitude,father[l],l)
-         #               if father[l]=="HUS":
-                            print(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,l,father[l])
-                            aristas(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,l,father[l])
-           #             print(l,father[l])
-                            l = father[l]
+        for key in ten:
+            l=key[0]
+            while father[l]!=None:
+                            #crear una arista dada por nodo con el nombre del padre l y el nombre del nodo l
+                            #aristas(self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Latitude,father[l],l)
+             #               if father[l]=="HUS":
+                               # print(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,l,father[l])
+                                aristas(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,l,father[l])
+               #             print(l,father[l])
+                                l = father[l]
         show_in_browser()
 
     #hallar las distancias infinitas y volverlas 0
