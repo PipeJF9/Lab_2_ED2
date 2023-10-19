@@ -43,3 +43,11 @@ def location(lat, lon):
         tooltip="I am in pixels",
     ).add_to(m)
 
+def conexion():
+    folium.PolyLine(
+    #smooth_factor=50,
+    locations=[[64.81510162, -147.8560028],[ 66.04109955 ,66.04109955]],
+    color="grey",
+    tooltip="HUS - FAI",
+    weight=2,
+    ).add_to(m)

@@ -33,8 +33,7 @@ for index, row in df.iterrows():
     destination_node = graph.search_node(destination_airport_code)
     if source_node is not None and destination_node is not None:
         graph.add_edge(source_node, destination_node)
-print(len(graph.nodes))
-print(len(Vuelos))
+
 
 
 add_markers(graph)
@@ -44,6 +43,7 @@ add_markers(graph)
 
 
 location(graph.search_node("HUS").Source_Airport_Latitude,graph.search_node("HUS").Source_Airport_Longitude)
+
 
 graph.Dijkstra("HUS")
 

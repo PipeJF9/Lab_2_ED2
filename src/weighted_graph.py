@@ -2,7 +2,7 @@ import math
 import numpy as np
 from typing import Any, List, Optional, Tuple
 from queue import Queue
-from Map import aristas,show_in_browser
+from Map import aristas,show_in_browser,conexion
 
 class Node:
 
@@ -106,19 +106,19 @@ class WeightedGraph:
     def tenmax(self,minimas,father,distance):
         max_ordenadas = sorted(minimas.items(), key=lambda x: x[1], reverse=True)
         ten=max_ordenadas[:10]
-        print(ten)
         if ten[0][1]==0:
             return
     #hallar las aristas de las 10 distancias minimas (no sirve)   
-        for key in ten:
-                    l=key[0]
-                    while father[l]!=None:
+        #for key in ten:
+        l=ten[0][0]
+        while father[l]!=None:
                         #crear una arista dada por nodo con el nombre del padre l y el nombre del nodo l
                         #aristas(self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Latitude,father[l],l)
-
-                        #aristas(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Latitude,l,father[l])
-                        l = father[l]
-
+         #               if father[l]=="HUS":
+                            print(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,l,father[l])
+                            aristas(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,l,father[l])
+           #             print(l,father[l])
+                            l = father[l]
         show_in_browser()
 
     #hallar las distancias infinitas y volverlas 0
