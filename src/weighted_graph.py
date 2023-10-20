@@ -92,16 +92,20 @@ class WeightedGraph:
     def tenmax(self,minimas,father):
         max_ordenadas = sorted(minimas.items(), key=lambda x: x[1], reverse=True)
         ten=max_ordenadas[:10]
-        print(ten)
+        for i in range(len(ten)):
+            print(self.search_node(ten[i][0]),"Distancia:",ten[i][1],"km")
+        
         if ten[0][1]==0:
+            print("No hay conexiones")
             return
     #hallar las aristas de las 10 distancias minimas (no sirve)   
         for key in ten:
             l=key[0]
-            while father[l]!=None:
-                            #crear una arista dada por nodo con el nombre del padre l y el nombre del nodo l
-                                aristas(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,l,father[l])
-                                l = father[l]
+            if key[1]!=0:
+                while father[l]!=None:
+                                #crear una arista dada por nodo con el nombre del padre l y el nombre del nodo l
+                                    aristas(self.search_node(l).Source_Airport_Latitude,self.search_node(l).Source_Airport_Longitude,self.search_node(father[l]).Source_Airport_Latitude,self.search_node(father[l]).Source_Airport_Longitude,l,father[l])
+                                    l = father[l]
         show_in_browser()
 
     #hallar las distancias infinitas y volverlas 0
@@ -116,7 +120,7 @@ class WeightedGraph:
         distance = dict()
         father = dict()
         visited = dict()
-
+        print(self.search_node(source))
         for u in self.nodes:
             distance[u.Source_Airport_Code] = np.inf
             father[u.Source_Airport_Code] = None
@@ -145,6 +149,7 @@ class WeightedGraph:
                             queue.append([v_name, distance[v_name]])
         if source2!=None:
             while father[source2]!=None:
+                print(self.search_node(source2),"Distancia:",distance[source2],"km")
                  #crear una arista dada por nodo con el nombre del padre l y el nombre del nodo l
                 aristas(self.search_node(source2).Source_Airport_Latitude,self.search_node(source2).Source_Airport_Longitude,self.search_node(father[source2]).Source_Airport_Latitude,self.search_node(father[source2]).Source_Airport_Longitude,source2,father[source2])
                 source2 = father[source2]
