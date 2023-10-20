@@ -75,6 +75,7 @@ class WeightedGraph:
             if node.Source_Airport_Code == source_airport_code:
                 return node
         return None
+
     def __get_minimum(self, l):
         minor = ["", np.inf]
         index = -1
@@ -115,6 +116,7 @@ class WeightedGraph:
                 distance[key]=0
         self.tenmax(distance,father)
         return distance
+
   #source: nodo fuente
     def Dijkstra(self, source,source2=None):
         distance = dict()

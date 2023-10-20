@@ -1,6 +1,31 @@
 import folium
 from folium.plugins import MarkerCluster
+from folium.map import Marker
+from jinja2 import Template
+from template import HTML
+
+click_template = """{% macro script(this, kwargs) %}
+    var {{ this.get_name() }} = L.marker(
+        {{ this.location|tojson }},
+        {{ this.options|tojson }}
+    ).addTo({{ this._parent.get_name() }}).on('click', onClick);
+{% endmacro %}"""
+
+# Change template to custom template
+Marker._template = Template(click_template)
+
 m = folium.Map()
+
+click_js = """function onClick(e) {
+                 console.log(e);
+                 }"""
+
+print(click_js)
+                 
+e = folium.Element(click_js)
+html = m.get_root()
+html.script.get_root().render()
+html.script._children[e.get_name()] = e
 
 marker_cluster = MarkerCluster().add_to(m)
 folium.plugins.LocateControl(auto_start=True).add_to(m)
@@ -21,7 +46,8 @@ def __add_marker(lat, lon, name, dic):
           <code>{dic.Source_Airport_Latitude}</code>
           <code>{dic.Source_Airport_Longitude}</code>
         """
-    folium.Marker(location=[lat, lon], popup=html, icon=folium.Icon(color='blue', icon='plane', prefix='fa'), tooltip="Click me!").add_to(marker_cluster)
+        
+    a = folium.Marker(location=[lat, lon], popup=HTML(dic), icon=folium.Icon(color='blue', icon='plane', prefix='fa'), tooltip="Click me!").add_to(marker_cluster)
 
 
 def aristas(lat1, lon1, lat2, lon2, code1, code2):

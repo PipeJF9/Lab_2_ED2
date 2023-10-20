@@ -3,11 +3,10 @@ import pandas as pd
 import os
 import pprint
 import math
-ruta_csv = '../data_set/flights_final.csv'
+ruta_csv = './data_set/flights_final.csv'
 
 #Ruta Absoluta del Dataset
 ruta_absoluta = os.path.abspath(ruta_csv)
-
 
 df = pd.read_csv(ruta_absoluta)
 
@@ -55,9 +54,3 @@ def distancia_haversine(lat1, lon1, lat2, lon2):
     distancia = r * c
 
     return distancia
-
-
-
-
-
-

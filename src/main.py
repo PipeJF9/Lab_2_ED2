@@ -5,7 +5,6 @@ from Map import add_markers, location
 #instancia de la clase WeightedGraph
 graph = WeightedGraph(len(diccionario))
 
-
 diccionario1 = {} #diccionario para guardar el source_airport_code y el destination_airport_code, a los que son iguales ponerle el mismo id
 contador1 = 1 #contador para asignar el id a cada nodo
 
@@ -35,16 +34,26 @@ for index, row in df.iterrows():
         graph.add_edge(source_node, destination_node)
 
 
-
 add_markers(graph)
-
-
-
-
-
 location(graph.search_node("COK").Source_Airport_Latitude,graph.search_node("COK").Source_Airport_Longitude)
+#graph.Dijkstra("COK")
 
+sw = True
+while (sw):
+  print("¿Qué deseas hacer con el mapa?")
+  print("\t (1) 10 aeropuertos con los caminos mínimos de un vértice.")
+  print("\t (2) Camino mínimo entre dos vértices.")
 
+  opt = int(input("Ingresa la opción requerida: (1) ó (2): "))
 
-graph.Dijkstra("COK","IPC")
+  if (opt == 1):
+   cod = input("Ingrese el código del vértice a examinar: ")
+   graph.Dijkstra(cod)
 
+  elif (opt == 2):
+    cod1 = input("Ingrese el código del vértice 1: ")
+    cod2 = input("Ingrese el código del vértice 2: ")
+    graph.Dijkstra(cod1, cod2)
+
+  else:
+    print("ENTRADA INVÁLIDA")
